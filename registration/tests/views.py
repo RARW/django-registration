@@ -1,4 +1,5 @@
 import datetime
+import os
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -26,6 +27,7 @@ class RegistrationViewTests(TestCase):
         self.old_activation = getattr(settings, 'ACCOUNT_ACTIVATION_DAYS', None)
         if self.old_activation is None:
             settings.ACCOUNT_ACTIVATION_DAYS = 7 # pragma: no cover
+        settings.TEMPLATE_DIRS += (os.path.join(os.path.dirname(__file__), 'templates'),)
 
     def tearDown(self):
         """
