@@ -27,19 +27,19 @@ class RegistrationVersionInfoTests(TestCase):
         """
         versions = [
             {'version': (1, 0, 0, 'alpha', 0),
-             'expected': "1.0 pre-alpha"},
+             'expected': r'1\.0(\.dev\d+)?'},
             {'version': (1, 0, 1, 'alpha', 1),
-             'expected': "1.0.1 alpha 1"},
+             'expected': r'1\.0\.1a1'},
             {'version': (1, 1, 0, 'beta', 2),
-             'expected': "1.1 beta 2"},
+             'expected': r'1.1b2'},
             {'version': (1, 2, 1, 'rc', 3),
-             'expected': "1.2.1 rc 3"},
+             'expected': r'1.2.1c3'},
             {'version': (1, 3, 0, 'final', 0),
-             'expected': "1.3"},
+             'expected': r'1.3'},
             {'version': (1, 4, 1, 'beta', 0),
-             'expected': "1.4.1 beta"},
+             'expected': r'1.4.1b'},
             ]
         
         for version_dict in versions:
             registration.VERSION = version_dict['version']
-            self.assertEqual(registration.get_version(), version_dict['expected'])
+            self.assertRegexpMatches(registration.get_version(), version_dict['expected'])
